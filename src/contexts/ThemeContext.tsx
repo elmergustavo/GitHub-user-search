@@ -8,7 +8,7 @@ interface ThemeContextProps {
 
 export const ThemeContext = createContext({} as ThemeContextProps);
 
-export const ThemeContextProvider: FC = ({ children }) => {
+export const ThemeContextProvider: FC = ({ children }: any) => {
   const [lightMode, setLightMode] = useState<boolean>(false);
   const darkTheme: object = {
     colors: {

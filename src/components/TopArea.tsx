@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useRef, useState, useEffect} from "react";
 import styled from "styled-components";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { UserProps, TopAreaProps } from "../types";
@@ -9,6 +9,9 @@ export default function TopArea({ setUser }: TopAreaProps) {
   const [empty, setEmpty] = useState<boolean>(false);
   const [notFound, setNotFound] = useState<boolean>(false);
   const usernameRef = useRef<HTMLInputElement>(null);
+  const [inputUser] = useState('octocat');
+
+
 
   function handleSubmit() {
     if (
@@ -24,7 +27,7 @@ export default function TopArea({ setUser }: TopAreaProps) {
     fetchUser(usernameRef.current.value);
   }
 
-  async function fetchUser(username: string): Promise<void> {
+  async function fetchUser(username: string) {
     const response = await fetch(`https://api.github.com/users/${username}`);
     const data = await response.json();
 
@@ -55,6 +58,11 @@ export default function TopArea({ setUser }: TopAreaProps) {
 
     setUser(user);
   }
+
+  useEffect(() =>{
+    fetchUser(inputUser)
+  },
+  [inputUser])
 
   return (
     <Container>
